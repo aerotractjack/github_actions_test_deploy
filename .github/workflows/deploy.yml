@@ -1,0 +1,20 @@
+name: Deploy to Windows Server
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Copy files to Windows Server
+      run: |
+        echo "${{ secrets.STICTHY_PRIVATE_KEY }}" > private_key.pem
+        chmod 600 private_key.pem
+        scp -i private_key.pem -r ${{ github.workspace }} -P 4951 aerotract@67.210.192.18:C:\\Users\\aerotract\\software
+        shred -u private_key.pem
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.STICTHY_PRIVATE_KEY }}
