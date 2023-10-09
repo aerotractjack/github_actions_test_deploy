@@ -14,7 +14,7 @@ jobs:
       run: |
         echo "${{ secrets.STITCHY_PRIVATE_KEY }}" > private_key.pem
         chmod 600 private_key.pem
-        scp -i private_key.pem -r ${{ github.workspace }} -P 4951 aerotract@67.210.192.18:C:\\Users\\aerotract\\software
+        scp -P 4951 -i private_key.pem -r ${{ github.workspace }} aerotract@67.210.192.18:C:\\Users\\aerotract\\software
         shred -u private_key.pem
       env:
         SSH_PRIVATE_KEY: ${{ secrets.STITCHY_PRIVATE_KEY }}
